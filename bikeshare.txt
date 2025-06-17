@@ -52,30 +52,31 @@ def load_data(city, month, day):
     Loads data for the specified city and filters by month and day if applicable.
 
     Args:
-        (str) city - name of the city to analyze
-        (str) month - name of the month to filter by, or "all" to apply no month filter
-        (str) day - name of the day of week to filter by, or "all" to apply no day filter
+        city (str): Name of the city to analyze.
+        month (str): Name of the month to filter by, or "all" for no filter.
+        day (str): Name of the day of week to filter by, or "all" for no filter.
+
     Returns:
-        df - Pandas DataFrame containing city data filtered by month and day
+        pandas.DataFrame: Filtered city data.
     """
-    # Load data file into a dataframe
     df = pd.read_csv(CITY_DATA[city])
-    
-    # Convert Start Time and End Time to datetime
     df['Start Time'] = pd.to_datetime(df['Start Time'])
     df['End Time'] = pd.to_datetime(df['End Time'])
     
-    # Extract month and day of week from Start Time
+    # Extract month and day of week in lowercase
     df['month'] = df['Start Time'].dt.month_name().str.lower()
     df['day_of_week'] = df['Start Time'].dt.day_name().str.lower()
     
-    # Filter by month if applicable
-    if month != 'all':
-        df = df[df['month'] == month]
+    # Normalize filter inputs to lowercase for consistent comparison
+    month = month.lower()
+    day = day.lower()
     
-    # Filter by day of week if applicable
-    if day != 'all':
-        df = df[df['day_of_week'] == day]
+    # Create boolean mask for filtering
+    month_mask = (df['month'] == month) if month != 'all' else True
+    day_mask = (df['day_of_week'] == day) if day != 'all' else True
+    
+    # Apply combined mask once for efficiency
+    df = df[month_mask & day_mask]
     
     return df
 
