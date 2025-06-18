@@ -4,7 +4,7 @@
 June 17, 2025
 
 ### Project Title
-Bike Share Data Analysis Using Python
+Bike Share Data Analysis Using Python. Hooray!
 
 ### Description
 This project analyzes bike share usage data from three major U.S. cities: Chicago, New York City, and Washington, DC. Using Python and data science libraries such as pandas and numpy, it computes descriptive statistics to uncover popular travel times, stations, trip durations, and user demographics. The project includes interactive filtering by city, month, and day of the week, and allows users to view raw data samples.
